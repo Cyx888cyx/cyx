@@ -26,6 +26,7 @@ html,
 body,
 #root {
   min-height: 100%;
+  min-height: 100dvh;
 }
 
 body {
@@ -37,6 +38,13 @@ body {
     radial-gradient(900px 500px at 100% 0%, rgba(245, 165, 36, 0.08), transparent 50%),
     linear-gradient(180deg, #08111b 0%, var(--bg-0) 40%, #050a10 100%);
   background-attachment: fixed;
+  padding:
+    env(safe-area-inset-top, 0)
+    env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0)
+    env(safe-area-inset-left, 0);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 button,
@@ -53,6 +61,32 @@ button {
   width: min(1280px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 1.25rem 0 3rem;
+}
+
+.install-tip {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius);
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  background: rgba(45, 212, 191, 0.1);
+  animation: rise 0.45s ease both;
+}
+
+.install-tip strong {
+  font-family: var(--font-display);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.install-tip p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
 }
 
 .topbar {

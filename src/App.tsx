@@ -70,6 +70,17 @@ export default function App() {
   const [notional, setNotional] = useState('1000')
   const [orderError, setOrderError] = useState<string | null>(null)
   const [backtest, setBacktest] = useState<BacktestResult | null>(null)
+  const [showInstallTip, setShowInstallTip] = useState(false)
+
+  useEffect(() => {
+    const standalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      ('standalone' in navigator &&
+        Boolean((navigator as Navigator & { standalone?: boolean }).standalone))
+    const dismissed = localStorage.getItem('cyx-quant-install-tip') === '1'
+    const mobile = window.matchMedia('(max-width: 900px)').matches
+    setShowInstallTip(!standalone && !dismissed && mobile)
+  }, [])
 
   useEffect(() => {
     let cancelled = false
@@ -137,6 +148,26 @@ export default function App() {
 
   return (
     <div className="app">
+      {showInstallTip && (
+        <div className="install-tip" role="status">
+          <div>
+            <strong>放到手机主屏幕</strong>
+            <p>
+              iPhone：Safari 打开后点「分享」→「添加到主屏幕」。Android：Chrome 菜单 →「添加到主屏幕」。
+            </p>
+          </div>
+          <button
+            type="button"
+            className="btn ghost"
+            onClick={() => {
+              localStorage.setItem('cyx-quant-install-tip', '1')
+              setShowInstallTip(false)
+            }}
+          >
+            知道了
+          </button>
+        </div>
+      )}
       <header className="topbar">
         <div className="brand">
           <div className="brand-mark">
